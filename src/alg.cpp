@@ -1,9 +1,8 @@
 // Copyright 2021 NNTU-CS
 #include <string>
 #include "tstack.h"
-
-int priory(char ch){
-  switch(ch){
+int priory (char ch) {
+  switch (ch) {
     case '(': return 0;
     case ')': return 1;
     case '+': return 2;
@@ -16,12 +15,12 @@ int priory(char ch){
 std::string infx2pstfx(std::string inf) {
   char t = 0;
   TStack <char> stack1;
-  td::string strpst;
+  std::string strpst;
   for (int i = 0; i < inf.length(); i++) {
     int priory1;
-    priory = priory1(inf[i]);
+    priory1 = priory(inf[i]);
     if (priory1 > -1) {
-      if ((priory1 == 0 || priory1 > priority(t) ||
+      if ((priory1 == 0 || priory1 > priory(t) ||
            stack1.isEmpty()) && inf[i] != ')') {
         if (stack1.isEmpty())
           t = inf[i];
@@ -100,6 +99,4 @@ int estimation(std::string pst) {
   result = stack2.get();
   stack2.pop();
   return result;
-}
-return 0;
 }
