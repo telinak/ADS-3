@@ -1,7 +1,7 @@
 // Copyright 2021 NNTU-CS
 #include <string>
 #include "tstack.h"
-int priory (char ch) {
+int priory(char ch) {
   switch (ch) {
     case '(': return 0;
     case ')': return 1;
