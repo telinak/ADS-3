@@ -2,8 +2,8 @@
 #include <string>
 #include "tstack.h"
 
-int priory(char ch){
-  switch(ch){
+int priority(char ch) {
+  switch (ch) {
     case '(': return 0;
     case ')': return 1;
     case '+': return 2;
@@ -14,17 +14,17 @@ int priory(char ch){
   }
 }
 std::string infx2pstfx(std::string inf) {
-  char t = 0;
+  char top = 0;
   TStack <char> stack1;
-  td::string strpst;
+  std::string strpst;
   for (int i = 0; i < inf.length(); i++) {
-    int priory1;
-    priory = priory1(inf[i]);
-    if (priory1 > -1) {
-      if ((priory1 == 0 || priory1 > priority(t) ||
+    int prior;
+    prior = priority(inf[i]);
+    if (prior > -1) {
+      if ((prior == 0 || prior > priority(top) ||
            stack1.isEmpty()) && inf[i] != ')') {
         if (stack1.isEmpty())
-          t = inf[i];
+          top = inf[i];
         stack1.push(inf[i]);
       } else if (inf[i] == ')') {
         while (stack1.get() != '(') {
@@ -34,16 +34,16 @@ std::string infx2pstfx(std::string inf) {
         }
         stack1.pop();
         if (stack1.isEmpty())
-          t = 0;
+          top = 0;
       } else {
         while (!stack1.isEmpty() &&
-               priory(stack1.get()) >= priory1) {
+               priority(stack1.get()) >= prior) {
           strpst.push_back(stack1.get());
           strpst.push_back(' ');
           stack1.pop();
         }
         if (stack1.isEmpty())
-          t = inf[i];
+          top = inf[i];
         stack1.push(inf[i]);
       }
     } else {
@@ -59,7 +59,7 @@ std::string infx2pstfx(std::string inf) {
   strpst.erase(strpst.end() - 1, strpst.end());
   return strpst;
 }
-int calc(int num1, int num2, char operation) {
+int calculator(int num1, int num2, char operation) {
   switch (operation) {
     case '+': return num1 + num2;
     case '-': return num1 - num2;
@@ -67,21 +67,21 @@ int calc(int num1, int num2, char operation) {
     case '/': return num1 / num2;
   }
 }
-int estimation(std::string pst) {
+int eval(std::string pst) {
   TStack <int> stack2;
   int i = 0;
-  int result = 0;
+  int res = 0;
   char ch = pst[i];
   while (ch) {
     if (ch >= '0' && ch <= '9') {
-      int a = 0;
-      int b = 1;
+      int chpst = 0;
+      int dec = 1;
       while (ch != ' ') {
-        a += (ch - 48) * b;
-        b *= 10;
+        chpst += (ch - 48) * dec;
+        dec *= 10;
         ch = pst[++i];
       }
-      stack2.push(a);
+      stack2.push(chpst);
     } else {
       char operation = ch;
       i++;
@@ -89,17 +89,15 @@ int estimation(std::string pst) {
       stack2.pop();
       int num1 = stack2.get();
       stack2.pop();
-      int result = calc(num1, num2, operation);
-      stack2.push(result);
+      int res = calculator(num1, num2, operation);
+      stack2.push(res);
     }
     if (i < pst.size())
       ch = pst[++i];
     else
       ch = 0;
   }
-  result = stack2.get();
+  res = stack2.get();
   stack2.pop();
-  return result;
-}
-return 0;
+  return res;
 }
