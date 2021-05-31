@@ -3,12 +3,12 @@
 #include "tstack.h"
 int priory(char ch) {
   switch (ch) {
+    case '*': return 3;
+    case '/': return 3;
     case '(': return 0;
     case ')': return 1;
     case '+': return 2;
     case '-': return 2;
-    case '*': return 3;
-    case '/': return 3;
     default: return -1;
   }
 }
@@ -35,8 +35,7 @@ std::string infx2pstfx(std::string inf) {
         if (stack1.isEmpty())
           t = 0;
       } else {
-        while (!stack1.isEmpty() &&
-               priory(stack1.get()) >= priory1) {
+        while (!stack1.isEmpty() && priory(stack1.get()) >= priory1) {
           strpst.push_back(stack1.get());
           strpst.push_back(' ');
           stack1.pop();
